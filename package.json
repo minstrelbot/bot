@@ -1,0 +1,25 @@
+{
+  "name": "pathfinder",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "pm2 start index.js --name path",
+    "prettier": "npx prettier check *"
+  },
+  "author": "Shadow",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@discordjs/opus": "^0.5.0",
+    "@octokit/core": "^3.4.0",
+    "array-pull": "^0.2.1",
+    "discord.js": "github:monbrey/discord.js#message-components",
+    "dotenv": "^8.2.0",
+    "ffmpeg-static": "^4.3.0",
+    "gray-matter": "^4.0.3",
+    "mongoose": "^5.11.17",
+    "ms": "^2.0.0",
+    "node-cmd": "^4.0.0",
+    "shuffle-array": "^1.0.1"
+  }
+}
