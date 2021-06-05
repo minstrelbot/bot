@@ -29,5 +29,5 @@ module.exports.run = async (message, args, client) => {
         }
       ]
     }
-    m.edit(``, { embed })
+    m.edit(null, { embed })
 }
