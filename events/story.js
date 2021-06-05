@@ -50,6 +50,7 @@ module.exports = (client) => {
     let story = stories.get(storyID)
     let section = matter.read(story.folder + "/" + part + ".md")
     let connection = interaction.guild.me.voice.connection
+    if(!connection) interaction.reply("An error has occurred. Please restart the story")
     let dispatcher = connection.play(story.folder + "/audio/" + section.data["Audio"] + ".mp3")
 
     dispatcher.on("start", () => {
