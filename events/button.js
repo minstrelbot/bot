@@ -13,7 +13,7 @@ module.exports = (client) => {
     if (cmd == "storyPart") {
       let storyID = args[0]
       let action = args[1]
-      client.emit("storyPart", interaction, storyID, action, {})
+      client.emit("storyPart", interaction, storyID, action, {voiceDone: false})
     }
   })
 }
