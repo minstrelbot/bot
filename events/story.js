@@ -4,7 +4,8 @@ const stories = require("../stories.js")
 const matter = require("gray-matter")
 
 module.exports = (client) => {
-  client.on("storyStart", async (channel, storyID, options) => {
+  client.on("storyStart", async (guild, storyID, options) => {
+    let chanset = await generateStory(guild)
     if (!storyID) return client.channels.cache.get(channel).send("No story given!")
     let embed = new MessageEmbed().setColor(0xa7dca7)
     let story = stories.get(storyID)
@@ -13,7 +14,7 @@ module.exports = (client) => {
     embed.setThumbnail(story.icon ? story.icon : client.user.avatarURL())
     let buttons = new MessageActionRow()
     buttons.addComponents(new MessageButton().setStyle("PRIMARY").setLabel("Begin").setCustomID(`storyPart:${story.id};intro`))
-    client.channels.cache.get(channel).send(`Story: **${story.name}**`, { embed, components: [buttons] })
+    client.channels.cache.get(channel).send(null, { embed, components: [buttons] })
   })
   // client.on("storyIntro", async (interaction, storyID, options) => {
   //   if (!storyID) throw new Error("No story given!")
@@ -26,17 +27,19 @@ module.exports = (client) => {
   //   let buttons = generateButtons(intro, story)
   //   interaction.update(`Story: **${story.name}**`, { embed, components: buttons })
   // })
-  client.on("storyPart", async (interaction, storyID, part) => {
-    let embed = new MessageEmbed().setColor(0xa7dca7)
+  client.on("storyPart", async (interaction, storyID, part, options) => {
     let story = stories.get(storyID)
     if (!story) return interaction.update(`Story ${storyID} not found! Contact the developers for assistance`)
     console.log(story, storyID)
     let section = matter.read(story.folder + "/" + part + ".md")
     console.log(section)
+    if(options?.voiceDone || !section.data["Voice"]) {
+    let embed = new MessageEmbed().setColor(0xa7dca7)
     embed.setDescription(section.content)
     embed.setThumbnail(story.icon ? story.icon : client.user.avatarURL())
     let buttons = generateButtons(section, story)
-    interaction.update(`Story: **${story.name}**`, { embeds: [embed], components: buttons })
+    interaction.update(null, { embeds: [embed], components: buttons })
+    } else client.emit("storyVoice", interaction, storyID, part)
   })
 }
 

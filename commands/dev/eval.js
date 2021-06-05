@@ -26,9 +26,9 @@ module.exports.run = async (message, args, client) => {
     if (typeof out !== "string") out = require("util").inspect(out)
     if (typeof out == "object") out = JSON.stringify(out, null, 2)
     out = typeof out == "string" ? out.replace(process.env.TOKEN, "[TOKEN REDACTED]").replace(process.env.MONGODB, "[DB URI REDACTED]") : out
-    message.channel.send(`**Output:**\n\`\`\`${out}\`\`\``)
+    message.channel.send(`${out}`, {code: "js", split: "\n"})
   } catch (err) {
     message.channel.send("An error occurred when trying to execute this command.")
-    return message.channel.send(`\`\`\`js\n${out}\`\`\``)
+    return message.channel.send(`\`\`\`js\n${err}\`\`\``)
   }
 }

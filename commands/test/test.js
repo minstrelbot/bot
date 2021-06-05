@@ -16,7 +16,6 @@ module.exports.run = async (message, args, client) => {
   })
 
   dispatcher.on("finish", () => {
-    let dispatcher = connection.play("/home/sd/path/stories/onceuponatest/audio/battle.mp3")
     console.log("audio.mp3 has finished playing!")
   })
 }
