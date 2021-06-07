@@ -6,7 +6,7 @@ module.exports = {
 
 module.exports.run = async (message, args, client) => {
   let cancel = false
-  if (!message.member.voice.channel?.type == "stage") return message.reply("Please join a stage channel before you start a story!")
+  if (!message.member.voice.channel || !message.member.voice.channel?.type == "stage") return message.reply("Please join a stage channel before you start a story!")
   let connection = await message.member.voice.channel.join()
   if (message.member.voice.channel.type == "stage")
     await connection.voice.setSuppressed(false).catch(() => {
