@@ -21,13 +21,13 @@ module.exports.run = async (message, args, client) => {
           name:`**API Latency:**`,
           value:`\`${Math.round(client.ws.ping)}ms\``,
           inline:true
-        },
-        {
-          name:`**Memory Usage:**`,
-          value:`\`${fn.getMemoryUsage()}mb\``,
-          inline:true
+        // },
+        // {
+        //   name:`**Memory Usage:**`,
+        //   value:`\`${fn.getMemoryUsage()}mb\``,
+        //   inline:true
         }
       ]
     }
-    m.edit(null, { embed })
+    m.edit({content: null, embeds: [embed] })
 }

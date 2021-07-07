@@ -1,12 +1,18 @@
+const { joinVoiceChannel } = require('@discordjs/voice');
+
 module.exports = {
   name: "test",
   aliases: [],
 }
 
 module.exports.run = async (message, args, client) => {
-  let connection
+  let connection 
   if (message.member.voice.channel) {
-    connection = await message.member.voice.channel.join()
+    connection = await joinVoiceChannel({
+      channelId: message.channel.id,
+      guildId: message.guild.id,
+      adapterCreator: message.guild.voiceAdapterCreator,
+    });
     if (message.member.voice.channel.type == "stage") connection.voice.setSuppressed(false);
   }
   let dispatcher = connection.play("/home/sd/path/stories/onceuponatest/audio/piano.mp3")

@@ -2,7 +2,23 @@ console.log("Booting bot...")
 require("dotenv").config()
 const fs = require("fs")
 const Discord = require("discord.js")
-const client = new Discord.Client({ intents: [Discord.Intents.ALL] })
+const client = new Discord.Client({
+  intents: ["GUILDS",
+    "GUILD_MEMBERS",
+    "GUILD_BANS",
+    "GUILD_EMOJIS",
+    "GUILD_INTEGRATIONS",
+    "GUILD_WEBHOOKS",
+    "GUILD_INVITES",
+    "GUILD_VOICE_STATES",
+    "GUILD_PRESENCES",
+    "GUILD_MESSAGES",
+    "GUILD_MESSAGE_REACTIONS",
+    "GUILD_MESSAGE_TYPING",
+    "DIRECT_MESSAGES",
+    "DIRECT_MESSAGE_REACTIONS",
+    "DIRECT_MESSAGE_TYPING"]
+})
 const config = require("./config.js")
 
 client.commands = new Discord.Collection()

@@ -11,15 +11,17 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@discordjs/opus": "^0.5.0",
-    "@octokit/core": "^3.4.0",
+    "@discordjs/voice": "^0.5.3",
     "array-pull": "^0.2.1",
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.2.0",
     "ffmpeg-static": "^4.3.0",
     "gray-matter": "^4.0.3",
+    "libsodium-wrappers": "^0.7.9",
     "mongoose": "^5.11.17",
     "ms": "^2.0.0",
     "node-cmd": "^4.0.0",
-    "shuffle-array": "^1.0.1"
+    "shuffle-array": "^1.0.1",
+    "sodium": "^3.0.2"
   }
 }
