@@ -6,7 +6,7 @@ const client = new Discord.Client({
   intents: ["GUILDS",
     "GUILD_MEMBERS",
     "GUILD_BANS",
-    "GUILD_EMOJIS",
+    "GUILD_EMOJIS_AND_STICKERS",
     "GUILD_INTEGRATIONS",
     "GUILD_WEBHOOKS",
     "GUILD_INVITES",
@@ -19,7 +19,7 @@ const client = new Discord.Client({
     "DIRECT_MESSAGE_REACTIONS",
     "DIRECT_MESSAGE_TYPING"]
 })
-const config = require("./config.js")
+const config = require("./config")
 
 client.commands = new Discord.Collection()
 fs.readdir("./commands/", (err, files) => {

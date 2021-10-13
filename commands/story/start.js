@@ -1,4 +1,4 @@
-const { fn } = require("../../config.js")
+const { fn } = require("../../config")
 const stories = require("../../stories.js")
 module.exports = {
   name: "start",

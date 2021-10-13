@@ -1,4 +1,4 @@
-const { fn } = require("../../config.js")
+const { fn } = require("../../config")
 const { profile } = require("../../db.js")
 module.exports = {
   name: "profile",
