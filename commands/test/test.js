@@ -1,27 +1,41 @@
-const { joinVoiceChannel } = require('@discordjs/voice');
+const { createAudioPlayer, createAudioResource, NoSubscriberBehavior, joinVoiceChannel, AudioPlayerStatus } = require("@discordjs/voice")
 
 module.exports = {
-  name: "test",
-  aliases: [],
+  command: {
+    name: "test",
+    description: "Test voice",
+    defaultPermission: true,
+  },
+  permissions: [],
 }
 
-module.exports.run = async (message, args, client) => {
-  let connection 
-  if (message.member.voice.channel) {
-    connection = await joinVoiceChannel({
-      channelId: message.channel.id,
-      guildId: message.guild.id,
-      adapterCreator: message.guild.voiceAdapterCreator,
-    });
-    if (message.member.voice.channel.type == "stage") connection.voice.setSuppressed(false);
-  }
-  let dispatcher = connection.play("/home/sd/path/stories/onceuponatest/audio/piano.mp3")
+module.exports.run = async (interaction, client) => {
+  interaction.reply("Queued")
+  let connection
+  if (!interaction.member.voice.channel) return
+  connection = await joinVoiceChannel({
+    channelId: interaction.member.voice.channel.id,
+    guildId: interaction.guild.id,
+    adapterCreator: interaction.guild.voiceAdapterCreator,
+  })
+  if (interaction.member.voice.channel.type == "stage") guild.me.voice.setSuppressed(false)
 
-  dispatcher.on("start", () => {
-    console.log("audio.mp3 is now playing!")
+  const player = await createAudioPlayer({
+    behaviors: {
+      noSubscriber: NoSubscriberBehavior.Pause,
+    },
   })
 
-  dispatcher.on("finish", () => {
-    console.log("audio.mp3 has finished playing!")
+  await connection.subscribe(player)
+
+  const resource = createAudioResource("./piano.mp3")
+  player.play(resource)
+
+  player.on(AudioPlayerStatus.Playing, () => {
+    console.log("The audio player has started playing!")
+  })
+
+  player.on(AudioPlayerStatus.AutoPaused, () => {
+    console.log("The audio player has stopped playing!")
   })
 }

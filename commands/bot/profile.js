@@ -1,10 +1,15 @@
-const { fn } = require("../../config")
 const { profile } = require("../../db.js")
+
 module.exports = {
-  name: "profile",
+  command: {
+    name: "profile",
+    description: "View your profile.",
+    defaultPermission: true,
+  },
+  permissions: [],
 }
 
-module.exports.run = async (message, args, client) => {
-  let p = await profile.findOne({user: message.author.id})
-  message.channel.send(JSON.stringify(p, null, 2))
+module.exports.run = async (interaction, client) => {
+  let p = await profile.findOne({ user: interaction.user.id })
+  interaction.reply(JSON.stringify(p, null, 2))
 }

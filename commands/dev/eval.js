@@ -4,31 +4,39 @@ const shuffle = require("shuffle-array")
 const config = require("../../config")
 const stories = require("../../stories.js")
 const fs = require("fs")
-const matter = require('gray-matter');
+const matter = require("gray-matter")
 
 module.exports = {
-  name: "eval",
+  command: {
+    name: "eval",
+    description: "Run js code in the bot.",
+    options: [
+      {
+        type: "STRING",
+        name: "code",
+        description: "Code to run.",
+        required: true,
+      },
+    ],
+  },
 }
 
-module.exports.run = async (message, args, client) => {
-  if (message.content.includes("TOKEN")) return await message.channel.send("Yeah no, we aren't dumb enough to give our token away ok? Now get back to your dumb life")
-  if (!["439223656200273932"].includes(message.author.id)) return
+module.exports.run = async (interaction, client) => {
+  if (!["439223656200273932"].includes(interaction.user.id)) return interaction.reply({ content: "You're not allowed to use this command", ephemeral: true })
   try {
-    if (!args[0]) return message.channel.send("undefined", { code: "js" })
+    let codeArr = interaction.options.getString("code").split("\n")
 
-    let codeArr = args.slice(0).join(" ").split("\n")
     if (!codeArr[codeArr.length - 1].startsWith("return")) codeArr[codeArr.length - 1] = `return ${codeArr[codeArr.length - 1]}`
 
     const code = `async () => { ${codeArr.join("\n")} }`
 
     let out = await eval(code)()
-    message.channel.send(`Typeof output: **${typeof out}**`)
+    typeStr = `Typeof output: **${typeof out}**`
     if (typeof out !== "string") out = require("util").inspect(out)
     if (typeof out == "object") out = JSON.stringify(out, null, 2)
     out = typeof out == "string" ? out.replace(process.env.TOKEN, "[TOKEN REDACTED]").replace(process.env.MONGODB, "[DB URI REDACTED]") : out
-    message.channel.send({content: `${out}`, code: "js", split: "\n"})
+    interaction.reply({ content: `${typeStr}\n\`\`\`js\n${out}\`\`\``, split: "\n" })
   } catch (err) {
-    message.channel.send("An error occurred when trying to execute this command.")
-    return message.channel.send(`\`\`\`js\n${err}\`\`\``)
+    interaction.reply(`An error occurred when trying to execute this command.\`\`\`js\n${err}\`\`\``)
   }
 }
