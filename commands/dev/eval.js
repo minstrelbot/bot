@@ -5,6 +5,8 @@ const config = require("../../config")
 const stories = require("../../stories.js")
 const fs = require("fs")
 const matter = require("gray-matter")
+const v = require("../../voice")
+const vAdapter = require("../../adapter")
 
 module.exports = {
   command: {

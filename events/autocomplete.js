@@ -5,7 +5,7 @@ module.exports = (client) => {
   client.on("interactionCreate", async (interaction) => {
     if (!interaction.isAutocomplete()) return
     console.log(interaction.options.getString("story"))
-    if (interaction.commandName === "info") {
+    if (interaction.commandName === "info" || interaction.commandName === "start") {
       let query = interaction.options.getString("story").toLowerCase()
       let response = []
       stories.forEach((x) => {
