@@ -32,7 +32,7 @@ module.exports.run = async (interaction, client) => {
 
   console.log(interaction.guild.me.voice.channel.id)
 
-  const player = voicePlayers.get(interaction.guild.id)
+  let player = voicePlayers.get(interaction.guild.id)
   if(!player) player = createAudioPlayer()
 
   connection.subscribe(player)
