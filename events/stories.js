@@ -37,10 +37,10 @@ module.exports = (client) => {
       console.log("Running voice")
     }
 
-    if(section.data["End"]) {
-        let connection = voiceConnections.get(interaction.guild.id)
-        connection.destroy()
-        voiceConnections.delete(interaction.guild.id)
+    if (part == "end" && options?.voiceDone) {
+      let connection = voiceConnections.get(interaction.guild.id)
+      connection?.destroy()
+      voiceConnections.delete(interaction.guild.id)
     }
   })
 
@@ -54,7 +54,7 @@ module.exports = (client) => {
 
     playFile(story.folder + "/audio/" + section.data["Audio"] + ".mp3", player)
     const storyVoiceWatch = (oldState, newState) => {
-      console.log(oldState, newState)
+      console.log(oldState.status, newState.status)
       if (newState.status === AudioPlayerStatus.Idle && oldState.status !== AudioPlayerStatus.Idle) {
         console.log("Starting next part")
         player.off("stateChange", storyVoiceWatch)
@@ -74,6 +74,7 @@ const generateButtons = (section, story) => {
     buttons.push(butt)
   })
   if (section.data["Flee"]) buttons.push(new MessageButton().setStyle("DANGER").setLabel("Flee").setCustomId(`storyPart:${story.id};flee`))
+  if (section.data["Autoplay"]) buttons.push(new MessageButton().setStyle("DANGER").setLabel("Continue").setCustomId(`storyPart:${story.id};${section.data["Autoplay"]}`))
   if (section.data["End"]) buttons.push(new MessageButton().setStyle("SECONDARY").setLabel("Continue").setCustomId(`storyPart:${story.id};end`))
   const row = new MessageActionRow()
   buttons.forEach((x) => row.addComponents(x))
