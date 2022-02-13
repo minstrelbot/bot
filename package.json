@@ -8,7 +8,7 @@
     "prettier": "npx prettier check *"
   },
   "author": "Shadow",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "dependencies": {
     "@discordjs/opus": "^0.6.0",
     "@discordjs/voice": "^0.7.2",
