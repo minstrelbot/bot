@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
+    "preinstall": "git submodule update --init --recursive",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start index.js --name path",
     "prettier": "npx prettier check *"
