@@ -3,10 +3,16 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "preinstall": "git submodule update --init --recursive",
+    "prepare": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start index.js --name path",
     "prettier": "npx prettier check *"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "author": "Shadow",
   "license": "MIT",
@@ -24,5 +30,8 @@
     "node-cmd": "^4.0.0",
     "shuffle-array": "^1.0.1",
     "sodium": "^3.0.2"
+  },
+  "devDependencies": {
+    "husky": "^7.0.4"
   }
 }
